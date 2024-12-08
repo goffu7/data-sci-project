@@ -73,7 +73,7 @@ for file_year in range(2018, 2024):
             country = affiliation.get("affiliation-country", "")
             affiliation_name = affiliation.get("affilname", [])
 
-            if chulalongkorn_found and affiliation_name is not "Chulalongkorn University" :
+            if chulalongkorn_found and affiliation_name != "Chulalongkorn University" :
                 organization_data.append({
                     "paper_id": paper_id,
                     "affiliation": affiliation_name,
