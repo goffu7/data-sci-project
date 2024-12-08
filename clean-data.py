@@ -50,53 +50,35 @@ for file_year in range(2018, 2024):
             })
     
         
-        head = bib.get("head", {})
         
         # Get author-group from head
-        author_groups = head.get("author-group", [])
-        
+        affiliations = data.get("abstracts-retrieval-response", {}).get("affiliation",[])
+        chulalongkorn_found = False
         # Skip if author-group is empty
-        for author_group in author_groups:
-            # Ensure author_group is a dictionary, otherwise skip it
-            if not isinstance(author_group, dict):
+        for affiliation in affiliations:
+            if not isinstance(affiliation, dict):
                 continue
+            country = affiliation.get("affiliation-country", "")
+            affiliation_name = affiliation.get("affilname", [])
 
-            affiliation = author_group.get("affiliation", {})
-            
-            # Skip if no affiliation found
-            if not affiliation:
+            # Check if "Chulalongkorn University" is mentioned
+            if affiliation_name and(  "Chulalongkorn University" == affiliation_name):
+                chulalongkorn_found = True
+            else:
+                chulalongkorn_found = False
+
+        for affiliation in affiliations:
+            if not isinstance(affiliation, dict):
                 continue
+            country = affiliation.get("affiliation-country", "")
+            affiliation_name = affiliation.get("affilname", [])
 
-            country = affiliation.get("country", "")
-            organizations = affiliation.get("organization", [])
-            
-            # Ensure organizations is a list
-            if not isinstance(organizations, list):
-                organizations = [organizations]
-
-            chulalongkorn_found = False  # Flag to check if Chulalongkorn is present in the organizations
-
-            # Check if "Chulalongkorn University" is present in the list of organizations
-            for org in organizations:
-                organization_name = org.get("$", "") if isinstance(org, dict) else org
-                
-                # Check if "Chulalongkorn University" is mentioned
-                if organization_name and(  "Chulalongkorn University" in organization_name):
-                    chulalongkorn_found = True
-                else:
-                    chulalongkorn_found = False
-            
-            # If Chulalongkorn University is found, save all other organizations in the list
-            if chulalongkorn_found:
-                for org in organizations:
-                    organization_name = org.get("$", "") if isinstance(org, dict) else org
-                    # Add other organizations if they aren't Chulalongkorn University
-                    if "Chulalongkorn University" != organization_name:
-                        organization_data.append({
-                            "paper_id": paper_id,
-                            "organization": organization_name,
-                            "country": country
-                        })
+            if chulalongkorn_found and affiliation_name is not "Chulalongkorn University" :
+                organization_data.append({
+                    "paper_id": paper_id,
+                    "organization": affiliation_name,
+                    "country": country
+                })
 
 
 
