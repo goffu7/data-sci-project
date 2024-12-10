@@ -27,14 +27,12 @@ jobs:
           sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
 
       # Step 4: Install ChromeDriver matching the installed Chrome version
-      - name: Install ChromeDriver
+      - name: Install ChromeDriver (using WebDriver Manager)
         run: |
-          LATEST_VERSION=$(curl -sL https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          CHROME_DRIVER_URL="https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip"
-          wget $CHROME_DRIVER_URL
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/bin/
-          sudo chmod +x /usr/bin/chromedriver
+          pip install webdriver-manager
+          chromedriver_autoinstaller = webdriver_manager.ChromeDriverManager()
+          chromedriver_path = chromedriver_autoinstaller.install()
+          echo "## ChromeDriver path: $chromedriver_path"
 
       # Step 5: Install Python dependencies
       - name: Install dependencies
