@@ -10,6 +10,21 @@ all_subjects = []
 organization_data = []
 all_index_terms = []
 
+import os 
+from dotenv import load_dotenv # type: ignore
+
+load_dotenv()
+
+mongo_url = os.getenv("MONGO_URL")
+mongo_client = MongoClient(mongo_url) # type: ignore
+db = mongo_client["arxiv_papers"]  # Database name
+collection = db["papers"]  # Collection name
+
+all_papers = collection.find()
+papers_list = list(all_papers)
+mongo_df = pd.DataFrame(papers_list)
+
+
 for file_year in range(2018, 2024):
     print(f"Processing year: {file_year}",end="  ")
     folder_path = f"res\\{file_year}"  # Update this to your folder path
