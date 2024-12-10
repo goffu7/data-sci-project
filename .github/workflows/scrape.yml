@@ -29,9 +29,9 @@ jobs:
       # Step 4: Install ChromeDriver matching the installed Chrome version
       - name: Install ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          LATEST_VERSION=$(curl -sL https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          CHROME_DRIVER_URL="https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip"
+          wget $CHROME_DRIVER_URL
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/bin/
           sudo chmod +x /usr/bin/chromedriver
