@@ -1,3 +1,5 @@
 # Ignore the 'res' folder
 res/
 .env
+# Ignore csv
+*.csv
