@@ -35,7 +35,6 @@ jobs:
           unzip chromedriver_linux64.zip -d /usr/local/bin
           sudo chmod +x /usr/local/bin/chromedriver
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 
       # Step 5: Install Python dependencies
       - name: Install dependencies
