@@ -126,7 +126,7 @@ while scraped_count < scrape_limit:
         paper_id += 1
 
         # Stop if 1000 entries are collected
-        if len(data) >= 1000:
+        if scraped_count >= 1000:
             break
 
     except Exception as e:
