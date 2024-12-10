@@ -29,12 +29,11 @@ jobs:
       # Step 4: Install ChromeDriver matching the installed Chrome version
       - name: Install ChromeDriver
         run: |
-          sudo apt-get update && apt-get install -y libnss3-dev
+          sudo apt-get update && sudo apt-get install -y libnss3-dev
           version=$(curl http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
           wget -N http://chromedriver.storage.googleapis.com/${version}/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip -d /usr/local/bin
           sudo chmod +x /usr/local/bin/chromedriver
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
       # Step 5: Install Python dependencies
       - name: Install dependencies
