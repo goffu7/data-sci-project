@@ -22,20 +22,14 @@ jobs:
       - name: Install Google Chrome
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y wget
+          wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.199-1_amd64.deb
+          sudo dpkg -i google-chrome-stable_114.0.5735.199-1_amd64.deb || sudo apt-get install -f -y
 
       # Step 4: Install ChromeDriver
       - name: Install ChromeDriver
         run: |
-          # Get installed Chrome version
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d. -f1)
-          # Get matching ChromeDriver version
-          CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$MAJOR_VERSION)
-          echo "Chrome version: $CHROME_VERSION"
-          echo "ChromeDriver version: $CHROME_DRIVER_VERSION"
-          # Download and install ChromeDriver
-          wget -N https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
+          wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/bin/
           sudo chmod +x /usr/bin/chromedriver
