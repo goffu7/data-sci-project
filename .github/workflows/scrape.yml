@@ -27,7 +27,7 @@ jobs:
           sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
 
       # Step 4: Install ChromeDriver matching the installed Chrome version
-      - name: Install ChromeDriver (using WebDriver Manager)
+      - name: Install ChromeDriver
         run: |
           pip install webdriver-manager
           chromedriver_autoinstaller = webdriver_manager.ChromeDriverManager()
