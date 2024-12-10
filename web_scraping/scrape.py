@@ -82,7 +82,7 @@ while scraped_count < scrape_limit:
             abstract_element = wait.until(
                 EC.presence_of_element_located((By.CLASS_NAME, "ltx_abstract"))
             )
-            abstract_text = abstract_element.text.replace("Abstract\n", "").strip()
+            abstract_text = abstract_element.text.replace("Abstract\n", "").replace("Abstract.\n", "").strip()
         except:
             abstract_text = ""
 
